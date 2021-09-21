@@ -1,0 +1,58 @@
+<div class="card mb-2 post-card">
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-10">
+                {{post.postedOn | date:'medium'}}
+            </div>
+            <div class="col-2" style="text-align: right;">
+                <a (click)="editPost()">Edit</a>&nbsp;
+                <a (click)="deletePost()">Delete</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                {{post.content}}
+            </div>
+        </div>
+
+        <div class="row" *ngIf="post.imageFileName && post.imageFileName !== ''">
+            <div class="preview col-12">
+                <img [src]="linkedinService.getImageLocation(post.imageFileName)" [alt]="" >
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-2" style="text-align: left;">
+            <a (click)="likePost(post)">Likes: {{post.likeCount}}</a>
+            &nbsp;
+            <a (click)="openComments()" >Comments: {{post.commentCount}}</a>
+        </div>
+        </div>
+
+        <div class="collapse" [ngClass]="{'show':showComments}" >
+            <div class="card card-body comment-list-container">
+
+                <div class="row">
+                    <a (click)="addComment()">Add Comment</a>
+                </div>
+
+                <div class="row comment-row" *ngFor = "let comment of commentList">
+                    <div class="col-10">
+                        {{comment.postedOn | date:'medium'}}
+                    </div>
+                    <div class="col-2" style="text-align: right;">
+                        <a (click)="editComment(comment.id)">Edit</a>&nbsp;
+                        <a (click)="deleteComment(comment.id)">Delete</a>
+                    </div>
+                    <div class="col-12">
+                        {{comment.content}}
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+    </div>
+</div>
+
